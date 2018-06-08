@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Decoder</title>
+</head>
+<body>
+  <h1>DECODER</h1>
+  <input type="text" id="textbox"></input>
+  <p id="message"></p>
+<hr>
+  <h1>ENCODER</h1>
+  <input type="text" id="textbox_2"></input>
+  <p id="message_2"></p>
+
+  <script>
+    const chars = ['A','B','C','D','E','F','G','H','I',
+                  'J','K','L','M','N','O','P','Q','R',
+                  'S','T','U','V','W','X','Y','Z'];
+
+    //DECODE
+    let code = "";
+    const p = document.getElementById('message')
+    const textbox = document.getElementById('textbox');
+    textbox.addEventListener('change', () =>{
+      if(isNaN(textbox.value)) return;
+      code = "";
+      let number = Number(textbox.value);
+      let divisor = 1;
+      let tmp = number;
+      let remainder;
+      let remainders = [];
+      while (divisor != 0){
+        remainder = tmp % 26;
+        divisor = Math.floor(tmp / 26);
+        remainders.unshift(remainder);
+        tmp = divisor;
+      }
+      console.log(remainders);
+      remainders.forEach(r => {
+        code += chars[r];
+      })
+      p.textContent = code;
+    })
+
+
+
+    //ENCODE
+    const p2 = document.getElementById('message_2')
+    const textbox2 = document.getElementById('textbox_2');
+    textbox2.addEventListener('change', () =>{
+      let number = 0;
+      let message = textbox2.value.toUpperCase().split("").reverse();
+      message.forEach((letter,index) => {
+        number += chars.indexOf(letter) * Math.pow(26, index);
+      })
+      p2.textContent = number;
+    })
+  </script>
+</body>
+</html>
